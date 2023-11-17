@@ -1,13 +1,6 @@
 #include <iostream>
 #include <limits>
 using namespace std;
-/* Lesen Sie vom Benutzer zwei x/y-Koordinaten ein. Jede Koordinate besteht aus zwei ganzen
-Zahlen. Sorgen Sie dafür, dass nur korrekte Werte eingelesen werden, indem Sie erneut zur
-Eingabe auffordern, falls ein fehlerhafter Wert eingegeben wurde. Es muss gelten:
-• x aus [1 … 50]
-• y aus [1 … 9]
-Die eingegebenen Werte müssen anschließend wie folgt auf dem Bildschirm angezeigt
-werden, Beispiel (30, 5): */
 
 void ignoreLine()
 {
@@ -50,7 +43,23 @@ Koordinator getValues(int ordnung)
     };
     return input;
 }
-
+string rowBuilder(string before, int xAchse)
+{   
+    if(xAchse == 1 )
+    {
+        return before + "*";
+    }
+    string display = before;
+    for (int iterator = 1; iterator < xAchse; iterator = iterator + 1)
+    {
+        display += " ";
+        if (iterator == xAchse - 1)
+        {
+            display += "*";
+        }
+    }
+    return display;
+}
 void buildGraph(Koordinator pair1st, Koordinator pair2nd)
 {
 
@@ -58,15 +67,7 @@ void buildGraph(Koordinator pair1st, Koordinator pair2nd)
     for (int yIndex = 0; yIndex <= 9; yIndex += 1)
     {
         string display = to_string(yIndex) + "|";
-        if (pair1st.yAchse == yIndex && pair2nd.yAchse == yIndex)
-        {
-
-            //    const int xDiff = abs(pair1st.xAchse - pair2nd.xAchse);
-            // chon so lon va so be
-            // iterate den so lon
-            // iterate den so be
-        }
-        else if (yIndex == 0)
+        if (yIndex == 0)
         {
             for (int i = 1; i <= 5; i++)
             {
@@ -74,40 +75,48 @@ void buildGraph(Koordinator pair1st, Koordinator pair2nd)
                 display += to_string(i);
             };
         }
+        else if (pair1st.yAchse == yIndex && pair2nd.yAchse == yIndex)
+        {
+
+            const signed int xDiff = pair1st.xAchse - pair2nd.xAchse;
+            int small{};
+            const int absXDiff = abs(xDiff);
+            if (xDiff > 0)
+            {  
+                small = pair2nd.xAchse;
+                string firstIteration = rowBuilder("", small);
+                display += rowBuilder(firstIteration, absXDiff);
+            }
+            else if (xDiff < 0)
+            {
+                small = pair1st.xAchse;
+                string firstIteration = rowBuilder("", small);
+                display += rowBuilder(firstIteration, absXDiff);
+            }
+            else
+            {
+                display += rowBuilder("", pair1st.xAchse);
+            }
+
+            {
+            }
+        }
         else if (pair1st.yAchse == yIndex)
         {
-            for (int iterator = 1; iterator < pair1st.xAchse; iterator = iterator + 1)
-            {
-                display += " ";
-                if (iterator == pair1st.xAchse - 1)
-                {
-                    display += "*";
-                }
-            }
+            display += rowBuilder("", pair1st.xAchse);
         }
         else if (pair2nd.yAchse == yIndex)
         {
-
-            for (int itr = 1; itr < pair2nd.xAchse; itr = itr + 1)
-            {
-
-                display += " ";
-                if (itr == pair2nd.xAchse - 1)
-                {
-                    display = display + "*";
-                }
-            }
+            display += rowBuilder("", pair2nd.xAchse);
         }
         toPrint[yIndex] = display;
     };
+
     for (int i = 9; i >= 0; i = i - 1)
     {
         cout << toPrint[i] << endl;
     }
-
-    // case: Trung 1 line
 }
-
 void aufgabe_10()
 {
     const Koordinator firstPair = getValues(1);
