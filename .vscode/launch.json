@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "c:/Users/vule/OneDrive - Software AG/Desktop/Repos/h_da-Pr1-Praktikum3",
-      "program": "c:/Users/vule/OneDrive - Software AG/Desktop/Repos/h_da-Pr1-Praktikum3/build/Debug/outDebug",
+      "externalConsole": false,
+      "cwd": "/home/lesonduong/h_da-Pr1-Praktikum3",
+      "program": "/home/lesonduong/h_da-Pr1-Praktikum3/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
