@@ -3,11 +3,12 @@
 #include <limits>
 #include <array>
 #include <vector>
+#include <cmath>
 #include <iomanip>
 using namespace std;
 void ignoreLine()
 {
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(259, '\n');
 }
 struct Koordinator
 {
@@ -69,7 +70,7 @@ void buildGraph(Koordinator pair1st, Koordinator pair2nd)
     string toPrint[10];
     for (int yIndex = 0; yIndex <= 9; yIndex += 1)
     {
-        string display = to_string(yIndex) + "|"; //Erste Teil von jeden Linien (bsp: 1| )
+        string display = to_string(yIndex) + "|"; // Erste Teil von jeden Linien (bsp: 1| )
         if (yIndex == 0)
         {
             for (int i = 1; i <= 5; i++)
@@ -113,6 +114,9 @@ void buildGraph(Koordinator pair1st, Koordinator pair2nd)
             display += rowBuilder("", pair2nd.xAchse);
         }
         toPrint[yIndex] = display;
+        // AB = √((xb - xa)^2 + (yb - ya)^2)
+        float abstand = ((pair1st.xAchse - pair2nd.xAchse) ^ 2 + (pair1st.xAchse - pair2nd.yAchse) ^ 2);
+        cout << "Abstand zwischen zwei Koordinaten ist " << fixed << setprecision(2) << sqrtf(abstand);
     };
 
     for (int i = 9; i >= 0; i = i - 1)
@@ -168,11 +172,11 @@ signed long long int get_number_input(string input_message, string error_message
 
 void aufgabe_11()
 {
-    //Zustand von aufgabe_11
-    //Drinnen sind
-    // Maximal Anzahl der Feldern (max_num_of_field)
-    // Anzahl der belegten Felder aus(occupied_field) 
-    // Läuft das Program oder nicht (in_menu)
+    // Zustand von aufgabe_11
+    // Drinnen sind
+    //  Maximal Anzahl der Feldern (max_num_of_field)
+    //  Anzahl der belegten Felder aus(occupied_field)
+    //  Läuft das Program oder nicht (in_menu)
     Program_State state{};
     state.occupied_field = 0;
     array<signed long long int, 3> num_array{};
@@ -296,7 +300,7 @@ struct Vertrag
     // Preis jede weitere Minute
     long double base_price_next;
 
-//durchschnittlichen kosten wenn man eine Menge von used_minutes benutzt
+    // durchschnittlichen kosten wenn man eine Menge von used_minutes benutzt
     long double get_kosten(long double used_minutes)
     {
         if (base_minutes == 0)
@@ -318,24 +322,48 @@ struct Vertrag
     }
 };
 
-void aufgabe15()
+void aufgabe_13()
 {
     const int cell_width = 15;
 
-     Vertrag vertrag1 = Vertrag(VertragName::ohne_bindung, 0.0, 0.0, 0.1);
-     Vertrag vertrag2 = Vertrag(VertragName::super30, 5.0, 30.0, 0.1);
-     Vertrag vertrag3 = Vertrag(VertragName::super50, 6.0, 50.0, 0.09);
-     Vertrag vertrag4 = Vertrag(VertragName::super100, 10.0, 100.0, 0.08);
+    Vertrag vertrag1 = Vertrag(VertragName::ohne_bindung, 0.0, 0.0, 0.1);
+    Vertrag vertrag2 = Vertrag(VertragName::super30, 5.0, 30.0, 0.1);
+    Vertrag vertrag3 = Vertrag(VertragName::super50, 6.0, 50.0, 0.09);
+    Vertrag vertrag4 = Vertrag(VertragName::super100, 10.0, 100.0, 0.08);
     Vertrag vertrag5 = Vertrag(VertragName::super200, 15.0, 200.0, 0.07);
 
     for (int i = 10; i <= 250; i += 10)
     {
-        cout << fixed << setprecision(2)<< "Monatliche Kosten bei " << i << " min"  << setw(cell_width) << vertrag1.get_kosten(i) << setw(cell_width) << vertrag2.get_kosten(i) << setw(cell_width) << vertrag3.get_kosten(i) << setw(cell_width) << vertrag4.get_kosten(i) << setw(cell_width) << vertrag5.get_kosten(i) << endl;
+        cout << fixed << setprecision(2) << "Monatliche Kosten bei " << i << " min"
+             << setw(cell_width) << vertrag1.get_kosten(i)
+             << setw(cell_width) << vertrag2.get_kosten(i)
+             << setw(cell_width) << vertrag3.get_kosten(i)
+             << setw(cell_width) << vertrag4.get_kosten(i)
+             << setw(cell_width) << vertrag5.get_kosten(i) << endl;
     }
 }
+void aufgabe_12()
+{
+    vector<long double> array = {234.6666, 343, 623, 4.0222};
+    bool sortiert = true;
+
+    for (int i = 0; i < array.size(); i++)
+    {
+        if (array[i] > array[i + 1])
+        {
+            sortiert = false;
+            break;
+            cout << endl
+                 << "Die Rheienfolge ist nicht sortiert";
+        }
+    }
+
+    cout << endl
+         << "Die Rheienfolge ist sortiert";
+};
 
 int main()
 {
-    aufgabe15();
+    aufgabe_13();
     return 0;
 }
