@@ -69,7 +69,7 @@ void buildGraph(Koordinator pair1st, Koordinator pair2nd)
     string toPrint[10];
     for (int yIndex = 0; yIndex <= 9; yIndex += 1)
     {
-        string display = to_string(yIndex) + "|";
+        string display = to_string(yIndex) + "|"; //Erste Teil von jeden Linien (bsp: 1| )
         if (yIndex == 0)
         {
             for (int i = 1; i <= 5; i++)
@@ -128,12 +128,12 @@ void aufgabe_10()
 }
 struct Program_State
 {
-    unsigned long long int num_of_field{};
+    unsigned long long int max_num_of_field{};
     unsigned long long int occupied_field{};
     bool in_menu{true};
     unsigned long long int get_occupied_field()
     {
-        return num_of_field;
+        return max_num_of_field;
     };
 };
 
@@ -168,10 +168,15 @@ signed long long int get_number_input(string input_message, string error_message
 
 void aufgabe_11()
 {
+    //Zustand von aufgabe_11
+    //Drinnen sind
+    // Maximal Anzahl der Feldern (max_num_of_field)
+    // Anzahl der belegten Felder aus(occupied_field) 
+    // Läuft das Program oder nicht (in_menu)
     Program_State state{};
     state.occupied_field = 0;
     array<signed long long int, 3> num_array{};
-    state.num_of_field = num_array.max_size();
+    state.max_num_of_field = num_array.max_size();
 
     while (state.in_menu)
     {
@@ -235,14 +240,14 @@ void aufgabe_11()
             break;
         case 'i':
         case 'I':
-            if (state.occupied_field == state.num_of_field)
+            if (state.occupied_field == state.max_num_of_field)
             {
                 cout << "Es gibt kein Platz mehr auf dem Array" << endl;
                 break;
             }
             else
             {
-                long long int input = get_number_input("Eingabe eines neuen Werts am Ende des bisher gefüllten Bereichs: ", "VCL WTF");
+                long long int input = get_number_input("Eingabe eines neuen Werts am Ende des bisher gefüllten Bereichs: ", "WTF");
                 num_array[state.occupied_field] = input;
                 state.occupied_field += 1;
                 break;
@@ -291,6 +296,7 @@ struct Vertrag
     // Preis jede weitere Minute
     long double base_price_next;
 
+//durchschnittlichen kosten wenn man eine Menge von used_minutes benutzt
     long double get_kosten(long double used_minutes)
     {
         if (base_minutes == 0)
